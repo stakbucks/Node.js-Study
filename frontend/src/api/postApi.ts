@@ -11,12 +11,12 @@ export interface IPost {
 export const getTrending = () =>
   axios.get(`${BASE_URL}/`).then((res) => res.data);
 
-export const getVideoInfo = (id: string) =>
+export const getPostInfo = (id: string) =>
   axios.get(`${BASE_URL}/board/${id}`).then((res) => res.data);
 
-export const editVideoTitle = (id: string, newTitle: string) =>
+export const editPost = (id: string, newTitle: string, newText: string) =>
   axios
-    .post(`${BASE_URL}/board/${id}/edit`, { newTitle })
+    .post(`${BASE_URL}/board/${id}/edit`, { newTitle, newText })
     .then((res) => res.data);
 
 export const uploadPost = (title: string, text: string) =>
@@ -25,4 +25,8 @@ export const uploadPost = (title: string, text: string) =>
       title,
       text,
     })
-    .then((res) => res.data);
+    .catch((err) => console.log(err))
+    .then((res) => console.log(res));
+
+export const deletePost = (id: string) =>
+  axios.post(`${BASE_URL}/board/${id}/delete`).then((res) => res.data);

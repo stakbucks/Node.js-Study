@@ -1,19 +1,24 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
-import { getVideoInfo, IPost } from "../api";
+import { getPostInfo, IPost } from "../api/postApi";
+import styled from "styled-components";
+
+const Text = styled.div`
+  white-space: pre-line;
+`;
+
 function Post() {
   const navigate = useNavigate();
   const params = useParams();
   const id = params.id + "";
-  const { data, isLoading } = useQuery<IPost>("video", () => getVideoInfo(id));
+  const { data } = useQuery<IPost>(["video", id], () => getPostInfo(id));
   const handleClick = () => {
     navigate("edit");
   };
-  console.log(data?.title);
   return (
     <>
       <h1>{data?.title}</h1>
-      <div>{data?.text}</div>
+      <div style={{ whiteSpace: "pre-line" }}>{data?.text}</div>
       <button onClick={handleClick}>수정하기</button>
     </>
   );

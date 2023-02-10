@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useMutation } from "react-query";
-import { uploadPost } from "../api";
+import { uploadPost } from "../api/postApi";
+import { useNavigate } from "react-router-dom";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -16,13 +17,14 @@ const Form = styled.form`
   }
 `;
 function UploadPost() {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const { mutate } = useMutation(() => uploadPost(title, text));
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(title, text);
     mutate();
+    // navigate("/");
   };
   return (
     <Wrapper>
@@ -34,6 +36,8 @@ function UploadPost() {
           type="text"
         />
         <textarea
+          cols={50}
+          wrap="hard"
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             setText(e.currentTarget.value)
           }

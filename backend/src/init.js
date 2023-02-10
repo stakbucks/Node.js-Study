@@ -1,6 +1,7 @@
 import "./db";
 import "./models/Post";
 import app from "./server";
+import "./models/User"
 
 const PORT = 4000;
 

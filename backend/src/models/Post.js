@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema({
-  title: String,
-  text: String,
-  views: Number,
-  createdAt: Date,
+  title: { type: String, required: true, trim: true },
+  text: { type: String, required: true, trim: true },
+  views: { type: Number, require: true, default: 0 },
+  createdAt: { type: Date, required: true, default: Date.now },
 });
 
 const Post = mongoose.model("Post", postSchema);

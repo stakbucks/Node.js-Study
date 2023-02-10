@@ -11,6 +11,6 @@ const boardRouter = express.Router();
 boardRouter.post("/upload", boardUpload);
 boardRouter.get("/:id", boardShow);
 boardRouter.post("/:id/edit", boardEdit);
-boardRouter.get("/:id/delete", boardDelete);
+boardRouter.post("/:id/delete", boardDelete);
 
 export default boardRouter;

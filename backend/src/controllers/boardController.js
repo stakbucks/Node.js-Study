@@ -2,10 +2,7 @@ import Post from "../models/Post";
 
 export const home = async (req, res) => {
   try {
-    console.log("1");
     const posts = await Post.find({});
-    console.log("2");
-    console.log(posts);
     return res.send(posts);
   } catch {
     return res.send("server-error");
@@ -13,27 +10,49 @@ export const home = async (req, res) => {
 };
 export const boardShow = async (req, res) => {
   const id = String(req.params.id);
-  console.log(id);
-  const post = await Post.find({ _id: id });
+  const post = await Post.findById(id);
   console.log(post);
-  return res.send(post[0]);
+  if (post) {
+    return res.send(post);
+  } else {
+    console.log("error");
+    return res.status(400).send("Invalid Id");
+  }
 };
-export const boardEdit = (req, res) => {
-  const id = Number(req.params.id);
-  const video = videos.filter((v) => v.id === id);
-  const newTitle = req.body.newTitle;
+export const boardEdit = async (req, res) => {
+  const id = String(req.params.id);
+  const { newTitle, newText } = req.body;
+  const post = await Post.exists({ _id: id });
+  if (!post) {
+    return res.sendStatus(404);
+  }
+  await Post.findByIdAndUpdate(id, {
+    title: newTitle,
+    text: newText,
+  });
+  return res.send();
   console.log(newTitle);
-  video[0].title = newTitle;
-  return res.send(video[0]);
 };
 export const boardUpload = async (req, res) => {
   const { id, title, text } = req.body;
-  await Post.create({
-    title,
-    text,
-    views: 0,
-    createdAt: Date.now(),
-  });
-  return res.redirect("/");
+  try {
+    await Post.create({
+      title,
+      text,
+    });
+    return res.send();
+  } catch (error) {
+    console.log(error._message);
+    return res.status(400);
+  }
 };
-export const boardDelete = (req, res) => res.send("Board Delete");
+export const boardDelete = async (req, res) => {
+  const id = String(req.params.id);
+  const post = await Post.exists({ _id: id });
+  console.log(id);
+  if (!post) {
+    return res.sendStatus(404);
+  }
+  await Post.findByIdAndDelete(id);
+  return res.send();
+};

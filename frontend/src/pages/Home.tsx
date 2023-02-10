@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
-import { getTrending, IPost } from "../api";
+import { getTrending, IPost } from "../api/postApi";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 
@@ -18,9 +18,16 @@ function Home() {
           </li>
         ))}
       </ul>
-      <span>
+      <div>
         <Link to="board/upload">추가하기</Link>
-      </span>
+      </div>
+      <div>
+        <Link to="/login">로그인</Link>
+      </div>
+      <div>
+        <Link to="/signup">회원가입</Link>
+      </div>
+
     </>
   );
 }
