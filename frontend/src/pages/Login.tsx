@@ -1,6 +1,14 @@
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { IUser } from "../api/userApi";
+import {
+  CLIENT_ID,
+  IUser,
+  loginUser,
+  CLIENT_SECRET,
+  getGithub,
+} from "../api/userApi";
+import { useMutation } from "react-query";
+import { Link, useNavigate } from "react-router-dom";
 const Wrapper = styled.div`
   width: 50vw;
   display: flex;
@@ -13,9 +21,25 @@ const Form = styled.form`
   flex-direction: column;
   gap: 10px;
 `;
+const GithubLogin = styled.div``;
 function Login() {
-  const { register, handleSubmit } = useForm<IUser>();
-  const onValid = () => {
+  const navigate = useNavigate();
+  const { register, handleSubmit, watch } = useForm<IUser>();
+  const password = watch("password");
+  const username = watch("username");
+  const { mutateAsync } = useMutation(["user", username], () =>
+    loginUser(username, password)
+  );
+  const onValid = async () => {
+    await mutateAsync()
+      .catch((err) => {
+        console.log(err.response);
+        if (err.response.status === 400) alert(err.response.data);
+      })
+      .then((res) => {
+        console.log(res);
+        if (res === "Success") navigate("/");
+      });
   };
   return (
     <Wrapper>
@@ -32,7 +56,9 @@ function Login() {
             type="password"
           />
         </div>
+        <button>로그인</button>
       </Form>
+      {/* <GithubLogin onClick={getGithub}>깃허브로 로그인하기</GithubLogin> */}
     </Wrapper>
   );
 }

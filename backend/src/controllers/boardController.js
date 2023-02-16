@@ -2,7 +2,7 @@ import Post from "../models/Post";
 
 export const home = async (req, res) => {
   try {
-    const posts = await Post.find({});
+    const posts = await Post.find({}).sort({ createdAt: "desc" });
     return res.send(posts);
   } catch {
     return res.send("server-error");
@@ -36,11 +36,11 @@ export const boardEdit = async (req, res) => {
 export const boardUpload = async (req, res) => {
   const { id, title, text } = req.body;
   try {
-    await Post.create({
+    const newPost = await Post.create({
       title,
       text,
     });
-    return res.send();
+    return res.send(newPost);
   } catch (error) {
     console.log(error._message);
     return res.status(400);
@@ -55,4 +55,16 @@ export const boardDelete = async (req, res) => {
   }
   await Post.findByIdAndDelete(id);
   return res.send();
+};
+
+export const boardSearch = async (req, res) => {
+  const text = req.query.text;
+  let post = [];
+  if (text) {
+    post = await Post.find({
+      title: { $regex: text, $options: "i" },
+    });
+    return res.send(post);
+  }
+  return res.send([]);
 };

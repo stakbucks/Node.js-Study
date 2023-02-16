@@ -13,7 +13,7 @@ globalRouter.get("/", home);
 globalRouter.get("/users", getAllUsers);
 globalRouter.get("/edit", edit);
 globalRouter.post("/join", join);
-globalRouter.get("/login", login);
-globalRouter.get("/search", search);
+globalRouter.post("/login", login);
+
 
 export default globalRouter;

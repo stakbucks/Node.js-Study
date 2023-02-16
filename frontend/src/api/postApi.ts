@@ -9,24 +9,39 @@ export interface IPost {
 }
 
 export const getTrending = () =>
-  axios.get(`${BASE_URL}/`).then((res) => res.data);
+  axios.get(`${BASE_URL}/`, { withCredentials: true }).then((res) => res.data);
 
 export const getPostInfo = (id: string) =>
-  axios.get(`${BASE_URL}/board/${id}`).then((res) => res.data);
+  axios
+    .get(`${BASE_URL}/board/${id}`, { withCredentials: true })
+    .then((res) => res.data);
 
 export const editPost = (id: string, newTitle: string, newText: string) =>
   axios
-    .post(`${BASE_URL}/board/${id}/edit`, { newTitle, newText })
+    .post(
+      `${BASE_URL}/board/${id}/edit`,
+      { newTitle, newText },
+      { withCredentials: true }
+    )
     .then((res) => res.data);
 
 export const uploadPost = (title: string, text: string) =>
-  axios
-    .post(`${BASE_URL}/board/upload`, {
+  axios.post(
+    `${BASE_URL}/board/upload`,
+    {
       title,
       text,
-    })
-    .catch((err) => console.log(err))
-    .then((res) => console.log(res));
+    },
+    { withCredentials: true }
+  );
 
 export const deletePost = (id: string) =>
-  axios.post(`${BASE_URL}/board/${id}/delete`).then((res) => res.data);
+  axios
+    .post(`${BASE_URL}/board/${id}/delete`, { withCredentials: true })
+    .then((res) => res.data);
+
+export const searchPost = (text: string) =>
+  axios.get(`${BASE_URL}/board/search`, {
+    params: { text: text },
+    withCredentials: true,
+  });

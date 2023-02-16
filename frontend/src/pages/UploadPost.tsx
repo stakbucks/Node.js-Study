@@ -20,11 +20,15 @@ function UploadPost() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const { mutate } = useMutation(() => uploadPost(title, text));
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const { mutateAsync } = useMutation(() => uploadPost(title, text));
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutate();
-    // navigate("/");
+    try {
+      const res = await mutateAsync();
+      navigate(`/board/${res.data._id}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Wrapper>
