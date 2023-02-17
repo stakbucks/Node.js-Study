@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
-import { deletePost, editPost, getPostInfo, IPost } from "../api/postApi";
+import { deletePost, editPost, getPostInfo, IPost } from "../../api/postApi";
 import { useMutation } from "react-query";
 import { useEffect, useState } from "react";
 import styled from "styled-components";

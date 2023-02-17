@@ -6,7 +6,7 @@ import {
   loginUser,
   CLIENT_SECRET,
   getGithub,
-} from "../api/userApi";
+} from "../../api/userApi";
 import { useMutation } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 const Wrapper = styled.div`

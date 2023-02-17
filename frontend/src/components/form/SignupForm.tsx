@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import { IUser, signupUser } from "../api/userApi";
+import { IUser, signupUser } from "../../api/userApi";
 import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div``;

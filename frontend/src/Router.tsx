@@ -1,13 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import DeletePost from "./pages/DeletePost";
-import EditPost from "./pages/EditPost";
+import EditPost from "./pages/post/EditPost";
 import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Post from "./pages/Post";
-import UploadPost from "./pages/UploadPost";
-import Signup from "./pages/Signup";
-import SignupForm from "./components/SignupForm";
+import Login from "./pages/account/Login";
+import Post from "./components/ShowPost";
+import UploadPost from "./pages/post/UploadPost";
+import Signup from "./pages/account/Signup";
+import SignupForm from "./components/form/SignupForm";
 import SignupSuccess from "./components/SignupSuccess";
 
 const router = createBrowserRouter([
@@ -33,10 +32,6 @@ const router = createBrowserRouter([
       {
         path: "/board/:id/edit",
         element: <EditPost />,
-      },
-      {
-        path: "/board/:id/delete",
-        element: <DeletePost />,
       },
       {
         path: "/login",

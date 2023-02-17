@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useMutation } from "react-query";
-import { uploadPost } from "../api/postApi";
+import { uploadPost } from "../../api/postApi";
 import { useNavigate } from "react-router-dom";
 const Wrapper = styled.div`
   display: flex;
