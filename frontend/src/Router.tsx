@@ -3,11 +3,11 @@ import App from "./App";
 import EditPost from "./pages/post/EditPost";
 import Home from "./pages/Home";
 import Login from "./pages/account/Login";
-import Post from "./components/ShowPost";
 import UploadPost from "./pages/post/UploadPost";
 import Signup from "./pages/account/Signup";
 import SignupForm from "./components/form/SignupForm";
 import SignupSuccess from "./components/SignupSuccess";
+import AllPosts from "./pages/post/AllPosts";
 
 const router = createBrowserRouter([
   {
@@ -17,18 +17,15 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        children: [
-          {
-            path: "/board/:id",
-            element: <Post />,
-          },
-        ],
       },
       {
         path: "/board/upload",
         element: <UploadPost />,
       },
-
+      {
+        path:"/show-all",
+        element:<AllPosts />
+      },
       {
         path: "/board/:id/edit",
         element: <EditPost />,

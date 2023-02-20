@@ -6,9 +6,15 @@ import {
   loginUser,
   CLIENT_SECRET,
   getGithub,
+  isLoggedIn,
 } from "../../api/userApi";
 import { useMutation } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
+import { Title } from "../../styles/Title";
+import { useCookies } from "react-cookie";
+import { useRecoilState } from "recoil";
+import { IUserLoggedIn } from "../../interfaces/User";
+import { userLoggedIn } from "../../recoil/atoms/userAtom";
 const Wrapper = styled.div`
   width: 50vw;
   display: flex;
@@ -22,6 +28,7 @@ const Form = styled.form`
 `;
 const GithubLogin = styled.div``;
 function Login() {
+  const [loggedIn, setLoggedIn] = useRecoilState<IUserLoggedIn>(userLoggedIn);
   const navigate = useNavigate();
   const { register, handleSubmit, watch } = useForm<IUser>();
   const password = watch("password");
@@ -30,19 +37,21 @@ function Login() {
     loginUser(username, password)
   );
   const onValid = async () => {
-    await mutateAsync()
-      .catch((err) => {
-        console.log(err.response);
-        if (err.response.status === 400) alert(err.response.data);
-      })
-      .then((res) => {
-        console.log(res);
-        if (res === "Success") navigate("/");
+    try {
+      await mutateAsync().then((res) => {});
+      await isLoggedIn().then((res) => {
+        setLoggedIn(res.data);
       });
+      console.log(loggedIn);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <Wrapper>
-      <h1>로그인</h1>
+      <Title>로그인</Title>
       <Form onSubmit={handleSubmit(onValid)}>
         <div>
           <label>아이디</label>

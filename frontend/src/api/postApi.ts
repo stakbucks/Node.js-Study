@@ -1,14 +1,7 @@
 import axios from "axios";
 export const BASE_URL = "http://localhost:4000";
 
-export interface IPost {
-  _id: string;
-  title: string;
-  text: string;
-  views: number;
-}
-
-export const getTrending = () =>
+export const getAll = () =>
   axios.get(`${BASE_URL}/`, { withCredentials: true }).then((res) => res.data);
 
 export const getPostInfo = (id: string) =>

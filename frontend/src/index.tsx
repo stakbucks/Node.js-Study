@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
+import { RecoilRoot } from "recoil";
 
 const client = new QueryClient();
 
@@ -66,8 +67,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <QueryClientProvider client={client}>
-    <GlobalStyle />
-    <RouterProvider router={router} />
-    <ReactQueryDevtools initialIsOpen={false} />
+    <RecoilRoot>
+      <GlobalStyle />
+      <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </RecoilRoot>
   </QueryClientProvider>
 );

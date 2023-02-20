@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useMutation } from "react-query";
 import { uploadPost } from "../../api/postApi";
 import { useNavigate } from "react-router-dom";
+import { Title } from "../../styles/Title";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -32,12 +33,14 @@ function UploadPost() {
   };
   return (
     <Wrapper>
+      <Title>글 쓰기</Title>
       <Form onSubmit={handleSubmit}>
         <input
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setTitle(e.currentTarget.value)
           }
           type="text"
+          placeholder="제목"
         />
         <textarea
           cols={50}
@@ -45,6 +48,7 @@ function UploadPost() {
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             setText(e.currentTarget.value)
           }
+          placeholder="내용"
         />
         <button>제출</button>
       </Form>

@@ -1,33 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
+import Nav from "./components/Nav";
+import { useCookies } from "react-cookie";
+import { isLoggedIn } from "./api/userApi";
+import { useRecoilState } from "recoil";
+import { IUserLoggedIn } from "./interfaces/User";
+import { userLoggedIn } from "./recoil/atoms/userAtom";
 
-const Body = styled.body`
+const Body = styled.div`
   display: flex;
   justify-content: center;
-`;
-
-const Navigator = styled.nav`
-  position: fixed;
-  top: 0;
-  background-color: black;
-  width: 100vw;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const Container = styled.div`
-  height: 100%;
-  width: 1150px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 50px;
-`;
-
-const Column = styled.div`
-  color: white;
 `;
 
 const Main = styled.main`
@@ -43,15 +26,19 @@ const Main = styled.main`
 `;
 
 function App() {
+  const [loggedIn, setLoggedIn] = useRecoilState<IUserLoggedIn>(userLoggedIn);
+  useEffect(() => {
+    isLoggedIn().then((res) => {
+      if (res.data.isLoggedIn === true) {
+        setLoggedIn({ isLoggedIn: true, user: res.data.user });
+      } else {
+        setLoggedIn({ isLoggedIn: false, user: {} });
+      }
+    });
+  }, []);
   return (
     <Body>
-      <Navigator>
-        <Container>
-          <Column>홈</Column>
-          <Column>전체 목록</Column>
-          <Column>인기 목록</Column>
-        </Container>
-      </Navigator>
+      <Nav />
       <Main>
         <Outlet />
       </Main>

@@ -38,6 +38,12 @@ export const loginUser = (username: string, password: string) =>
     )
     .then((res) => res.data);
 
+export const isLoggedIn = () =>
+  axios.get(`${BASE_URL}/users/isLoggedIn`, { withCredentials: true });
+
+export const logout = () =>
+  axios.get(`${BASE_URL}/users/logout`, { withCredentials: true });
+
 export const getGithub = () => {
   // axios
   //   .get(

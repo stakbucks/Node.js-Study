@@ -1,6 +1,7 @@
 import User from "../models/User";
 import bcrypt from "bcrypt";
 import { session } from "express-session";
+
 export const join = async (req, res) => {
   const { name, username, password, email } = req.body;
   const exists = await User.exists({ $or: [{ username }, { email }] });
@@ -16,6 +17,12 @@ export const join = async (req, res) => {
   });
   console.log("USER ADDED");
   return res.send();
+};
+
+export const isLoggedIn = async (req, res) => {
+  console.log(req.session);
+  const auth = { isLoggedIn: req.session.isLoggedIn, user: req.session.user };
+  return res.send(auth);
 };
 
 export const getAllUsers = async (req, res) => {
@@ -35,11 +42,17 @@ export const login = async (req, res) => {
   if (!ok) {
     return res.status(400).send("Wrong Password");
   }
-  req.session.loggedIn = true;
+  req.session.isLoggedIn = true;
   req.session.user = user;
-  return res.send(req.session);
+  return res.send();
 };
 
+export const logout = async (req, res) => {
+  req.session.isLoggedIn = false;
+  req.session.user = {};
+  const auth = { isLoggedIn: req.session.isLoggedIn, user: req.session.user };
+  return res.send(auth);
+};
 
 export const handleUserEdit = (req, res) => res.send("Edit User");
 export const handleUserDelete = (req, res) => res.send("Delete User");
