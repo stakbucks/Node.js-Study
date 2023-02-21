@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { isLoggedIn, logout } from "../api/userApi";
@@ -44,14 +44,14 @@ const Column = styled.div`
 
 function Nav() {
   console.log("Nav rendered");
+
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useRecoilState<IUserLoggedIn>(userLoggedIn);
 
+  const location = useLocation();
   const handleClick = async () => {
     await logout().then((res) => setLoggedIn(res.data));
-  };
-  const handleWriteClick = async () => {
-    loggedIn.isLoggedIn ? navigate("/board/upload") : navigate("/login");
+    window.location.replace(location.pathname);
   };
 
   return (
@@ -64,8 +64,8 @@ function Nav() {
           <Column>
             <Link to="/show-all">전체 목록</Link>
           </Column>
-          <Column style={{ cursor: "pointer" }} onClick={handleWriteClick}>
-            글 쓰기
+          <Column>
+            <Link to="board/upload">글 쓰기</Link>
           </Column>
         </Links>
         {loggedIn.isLoggedIn ? (

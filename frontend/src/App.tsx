@@ -23,18 +23,15 @@ const Main = styled.main`
   padding-top: 10px;
   border-left: 1px solid tomato;
   border-right: 1px solid tomato;
+  @media screen and (max-width: 1150px) {
+    background-color: pink;
+  }
 `;
 
 function App() {
   const [loggedIn, setLoggedIn] = useRecoilState<IUserLoggedIn>(userLoggedIn);
   useEffect(() => {
-    isLoggedIn().then((res) => {
-      if (res.data.isLoggedIn === true) {
-        setLoggedIn({ isLoggedIn: true, user: res.data.user });
-      } else {
-        setLoggedIn({ isLoggedIn: false, user: {} });
-      }
-    });
+    isLoggedIn().then((res) => setLoggedIn(res.data));
   }, []);
   return (
     <Body>

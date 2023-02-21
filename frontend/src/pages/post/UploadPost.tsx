@@ -1,9 +1,13 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import { uploadPost } from "../../api/postApi";
 import { useNavigate } from "react-router-dom";
 import { Title } from "../../styles/Title";
+import { isLoggedIn } from "../../api/userApi";
+import { useRecoilState } from "recoil";
+import { userLoggedIn } from "../../recoil/atoms/userAtom";
+import { IUserLoggedIn } from "../../interfaces/User";
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,6 +26,14 @@ function UploadPost() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const { mutateAsync } = useMutation(() => uploadPost(title, text));
+  const [loggedIn, setLoggedIn] = useRecoilState<IUserLoggedIn>(userLoggedIn);
+  useEffect(() => {
+    isLoggedIn().then((res) => {
+      if (!res.data.isLoggedIn) {
+        navigate("/login");
+      }
+    });
+  }, []);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {

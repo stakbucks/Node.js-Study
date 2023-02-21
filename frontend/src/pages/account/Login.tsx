@@ -43,7 +43,7 @@ function Login() {
         setLoggedIn(res.data);
       });
       console.log(loggedIn);
-      navigate("/");
+      navigate(-1);
     } catch (error) {
       console.log(error);
     }
