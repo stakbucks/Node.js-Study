@@ -38,7 +38,7 @@ function Login() {
   );
   const onValid = async () => {
     try {
-      await mutateAsync().then((res) => {});
+      await mutateAsync();
       await isLoggedIn().then((res) => {
         setLoggedIn(res.data);
       });

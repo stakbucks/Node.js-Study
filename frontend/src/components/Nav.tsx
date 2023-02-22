@@ -50,7 +50,7 @@ function Nav() {
 
   const location = useLocation();
   const handleClick = async () => {
-    await logout().then((res) => setLoggedIn(res.data));
+    await logout();
     window.location.replace(location.pathname);
   };
 
