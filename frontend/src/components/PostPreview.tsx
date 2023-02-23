@@ -15,7 +15,7 @@ const PostContainer = styled.div`
 function PostPreview({ post }: { post: IPost }) {
   const navigate = useNavigate();
   const handleClick = (id: string) => {
-    navigate(`board/${id}`);
+    navigate(`/board/${id}`);
   };
   return (
     <PostContainer onClick={() => handleClick(post._id)}>

@@ -1,13 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import EditPost from "./pages/post/EditPost";
+import EditPost from "./components/post/EditPost";
 import Home from "./pages/Home";
 import Login from "./pages/account/Login";
-import UploadPost from "./pages/post/UploadPost";
+import UploadPost from "./components/post/UploadPost";
 import Signup from "./pages/account/Signup";
 import SignupForm from "./components/form/SignupForm";
 import SignupSuccess from "./components/SignupSuccess";
-import AllPosts from "./pages/post/AllPosts";
+import AllPosts from "./components/post/AllPosts";
+import Post from "./components/post/Post";
 
 const router = createBrowserRouter([
   {
@@ -22,9 +23,10 @@ const router = createBrowserRouter([
         path: "/board/upload",
         element: <UploadPost />,
       },
+      { path: "/board/:id", element: <Post /> },
       {
-        path:"/show-all",
-        element:<AllPosts />
+        path: "/show-all",
+        element: <AllPosts />,
       },
       {
         path: "/board/:id/edit",

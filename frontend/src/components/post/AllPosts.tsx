@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { getAll } from "../../api/postApi";
-import ShowAllPosts from "../../components/showPosts/ShowAllPosts";
+import ShowAllPosts from "../showPosts/ShowAllPosts";
 import { IPost } from "../../interfaces/Post";
 import { Wrapper } from "../../styles/PageWrapper";
 import { Title } from "../../styles/Title";
