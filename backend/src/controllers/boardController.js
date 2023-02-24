@@ -34,11 +34,12 @@ export const boardEdit = async (req, res) => {
   console.log(newTitle);
 };
 export const boardUpload = async (req, res) => {
-  const { id, title, text } = req.body;
+  const { id, title, text, createdBy } = req.body;
   try {
     const newPost = await Post.create({
       title,
       text,
+      createdBy,
     });
     return res.send(newPost);
   } catch (error) {

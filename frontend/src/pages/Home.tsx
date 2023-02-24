@@ -49,7 +49,7 @@ function Home() {
       <Title>최근 게시물</Title>
       {data ? <ShowLatest data={data} /> : null}
       <Goto>
-        <Link to="/">더 보기 →</Link>
+        <Link to="/show-all">더 보기 →</Link>
       </Goto>
     </Wrapper>
   );

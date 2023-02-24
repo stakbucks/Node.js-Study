@@ -18,12 +18,13 @@ export const editPost = (id: string, newTitle: string, newText: string) =>
     )
     .then((res) => res.data);
 
-export const uploadPost = (title: string, text: string) =>
+export const uploadPost = (title: string, text: string, createdBy: string) =>
   axios.post(
     `${BASE_URL}/board/upload`,
     {
       title,
       text,
+      createdBy,
     },
     { withCredentials: true }
   );

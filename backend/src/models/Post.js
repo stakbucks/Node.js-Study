@@ -5,6 +5,7 @@ const postSchema = new mongoose.Schema({
   text: { type: String, required: true, trim: true },
   views: { type: Number, require: true, default: 0 },
   createdAt: { type: Date, required: true, default: Date.now },
+  createdBy: { type: String, required: true },
 });
 
 const Post = mongoose.model("Post", postSchema);

@@ -5,15 +5,37 @@ import { useMutation } from "react-query";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { IPost } from "../../interfaces/Post";
+
 const Form = styled.form`
   width: 30vw;
+  height: 500px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  textarea {
-    height: 300px;
-  }
+  position: relative;
+
+  padding: 30px;
 `;
+const Title = styled.input``;
+const Text = styled.textarea`
+  height: 300px;
+`;
+const Btns = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 15px;
+  bottom: 50px;
+  right: 20px;
+`;
+const SubmitBtn = styled.button`
+  cursor: pointer;
+`;
+const DeleteBtn = styled.button`
+  cursor: pointer;
+`;
+
 function EditPost() {
   const navigate = useNavigate();
   const params = useParams();
@@ -22,7 +44,7 @@ function EditPost() {
     data: post,
     isLoading,
     isFetching,
-  } = useQuery<IPost>(["video", id], () => getPostInfo(id), {
+  } = useQuery<IPost>(["post", id], () => getPostInfo(id), {
     keepPreviousData: true,
   });
   const { mutateAsync: deleting } = useMutation(() => deletePost(id));
@@ -54,19 +76,21 @@ function EditPost() {
       {isFetching ? null : (
         <>
           <Form onSubmit={handleSubmit}>
-            <input
+            <Title
               onChange={handleTitleChange}
               defaultValue={post?.title}
               type="text"
             />
-            <textarea
+            <Text
               cols={50}
               defaultValue={post?.text}
               onChange={handleTextChange}
             />
-            <button>수정</button>
+            <Btns>
+              <SubmitBtn>수정</SubmitBtn>
+              <DeleteBtn onClick={handleDelete}>삭제</DeleteBtn>
+            </Btns>
           </Form>
-          <button onClick={handleDelete}>삭제</button>
         </>
       )}
     </>

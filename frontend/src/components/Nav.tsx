@@ -7,6 +7,7 @@ import { useRecoilState } from "recoil";
 import { userLoggedIn } from "../recoil/atoms/userAtom";
 import { IUserLoggedIn } from "../interfaces/User";
 const Navigator = styled.nav`
+  z-index: 99;
   position: fixed;
   top: 0;
   background-color: black;

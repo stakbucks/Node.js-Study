@@ -25,11 +25,14 @@ function UploadPost() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const { mutateAsync } = useMutation(() => uploadPost(title, text));
+  const { mutateAsync } = useMutation(() =>
+    uploadPost(title, text, loggedIn.user._id as any)
+  );
   const [loggedIn, setLoggedIn] = useRecoilState<IUserLoggedIn>(userLoggedIn);
   useEffect(() => {
     isLoggedIn().then((res) => {
       if (!res.data.isLoggedIn) {
+        setLoggedIn(res.data);
         navigate("/login");
       }
     });
@@ -38,6 +41,7 @@ function UploadPost() {
     e.preventDefault();
     try {
       const res = await mutateAsync();
+      console.log(res.data);
       navigate(`/board/${res.data._id}`);
     } catch (error) {
       console.log(error);
